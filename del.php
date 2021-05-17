@@ -1,26 +1,32 @@
 <?php
 
-function  SupprimerBD ( )
-{
+    print '0';
  
   session_start();
+    print $_GET['id'];
   if ((isset($_GET['id']) && !empty($_GET['id']))) {
-
+      print '1';
       $id = strip_tags($_GET['id']);
       include_once('connect.php');
+      print '2';
 
       $sql = 'DELETE FROM type_livre2 WHERE id = ?;' ;
+      print '3';
 
       $stmt = mysqli_prepare($db, $sql);
+      print '4';
 
       mysqli_stmt_bind_param($stmt, 'i', $id);
+      print '5';
 
       mysqli_stmt_execute($stmt);
+      print '6';
 
       mysqli_stmt_bind_result($stmt, $id, $libelle);
       mysqli_stmt_fetch($stmt);
-  }
-}
+      print '7';
+    }
+
 
 
 ?>
@@ -35,8 +41,8 @@ function  SupprimerBD ( )
     </head>
     <body>
     <p>Etes vous sur de vouloir supprimer ?</p>
-    <form action="SupprimerBD">
-    <input type="submit" class="btn btn-danger">Confirmer</input>
+    <form action="?">
+    <input type="submit" class="btn btn-danger" placeholder="Confirmer"></input>
     </form>
     </body>
     </html>
