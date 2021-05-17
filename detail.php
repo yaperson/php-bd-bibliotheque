@@ -7,7 +7,7 @@
 
         $sql = 'SELECT id, libelle FROM type_livre2 WHERE id = ?;';
 
-        $stmt = mysqli_prepare($DataBase, $sql);
+        $stmt = mysqli_prepare($db, $sql);
 
         mysqli_stmt_bind_param($stmt, 'i', $id);
 

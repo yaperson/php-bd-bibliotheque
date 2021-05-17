@@ -42,12 +42,13 @@
         $libelle = $donnees['libelle'];
         //--- Afficher une ligne du tableau HTML pour chaque enregistrement de la table 
         echo '<tr';
+        echo '<td></td>';
         echo '<td>' . $id . '</td>';
         echo '<td>' . $libelle . '</td>';
         echo '<td> 
           <a href="detail.php?id=' . $id . '"> Voir </a> 
           <a > Modifier </a> 
-          <a > Suprimer </a> 
+          <a href="del.php"> Suprimer </a> 
           </td>';
         echo '</tr>';
       }

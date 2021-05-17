@@ -1,53 +1,28 @@
 <?php
-//------------------------------------------------------------------------------
-//  Consultation de la BD et affichage des enregistrements dans un tableau
-//
 
-function  SupprimerBD ( $NomRecherche )
+function  SupprimerBD ( )
 {
-  $id = $_GET['id'] ;
-  
-  
+ 
+  session_start();
+  if ((isset($_GET['id']) && !empty($_GET['id']))) {
 
-  //--- Connection au SGBDR 
-  include_once('connect.php');
+      $id = strip_tags($_GET['id']);
+      include_once('connect.php');
 
-  //--- Ouverture de la base de données
-  
+      $sql = 'DELETE FROM type_livre2 WHERE id = ?;' ;
 
-  
-  
-  // Delete FROM personne where nom='DUPONT' Limit 1;
-  $sql = "DELETE From Type_de_livre Where id_t='". $id ."' Limit 1;" ;
-  //--- Préparation de la requête
-  $stmt = mysqli_prepare($DataBase,$sql);
-    
-  //--- Exécution de la requête 
-  mysqli_stmt_execute($stmt);
+      $stmt = mysqli_prepare($db, $sql);
 
-  mysqli_stmt_close($stmt);
+      mysqli_stmt_bind_param($stmt, 'i', $id);
 
+      mysqli_stmt_execute($stmt);
 
-
-  //--- Déconnection de la base de données
-  header('Location: index.php');
-  
-}
-//------------------------------------------------------------------------------
-//  Programme Principal
-//
-if (  isset($_GET['id'])  )
-{
-  $id = $_GET['id'] ;
-
-  if (  isset($id)  &&  ($id!='')  )
-  {
-    //--- Suppression ...
-    SupprimerBD ( $id ) ;
+      mysqli_stmt_bind_result($stmt, $id, $libelle);
+      mysqli_stmt_fetch($stmt);
   }
 }
- 
-//------------------------------------------------------------------------------
+
+
 ?>
 <!DOCTYPE html>
     <html lang="en">
@@ -59,34 +34,9 @@ if (  isset($_GET['id'])  )
         <title>Oui</title>
     </head>
     <body>
-    <p>Etes vous sur de vouloir supprimer</p>
-<?php
-    echo "<input type='button' value='OUI'>";
-    echo"<input type='button' value='NON'>";
-
-    $btn = document.querySelector('input');
-
-    $btn.addEventListener('click', updateBtn);
-    function updateBtn() {
-    if ($btn.value === 'OUI') {
-        if (  isset($_GET['id_t'])  )
-  {
-    $id = $_GET['id_t'] ;
-
-    if (  isset($id)  &&  ($id!='')  )
-    {
-      //--- Suppression ...
-      SupprimerBD ( $id ) ;
-    }
-  }
-
-    
-  } else {
-    header('Location: index.php');
-    
-  }
-}
-?>
-        
+    <p>Etes vous sur de vouloir supprimer ?</p>
+    <form action="SupprimerBD">
+    <input type="submit" class="btn btn-danger">Confirmer</input>
+    </form>
     </body>
     </html>

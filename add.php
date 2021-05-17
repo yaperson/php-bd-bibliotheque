@@ -3,25 +3,22 @@
 session_start();
 // on Verifie si les données du formulaire on été envoyé
 
-if ((isset($_POST['label'])) && (!empty($_POST['label']))) {
-    $_SESSION['message'] = ' not empty-Nouveau type de livre : "' . $_POST['label'] . '"';
-
-
-
+if ((isset($_POST['libelle'])) && (!empty($_POST['libelle']))) {
+    $_SESSION['message'] = ' not empty-Nouveau type de livre : "' . $_POST['libelle'] . '"';
 
 
     // On se connecte à la base de données
-
     include_once 'connect.php';
+
 
     try {
         // On nettoi les données envoyés
-        $label = strip_tags($_POST['label']);
+        $libelle = strip_tags($_POST['libelle']);
 
         //On prepare la requete
         $sql = "INSERT INTO type_livre2 (libelle) VALUES(?);";
-        $stmt = mysqli_prepare($DataBase, $sql);
-        mysqli_stmt_bind_param($stmt, 's', $label);
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, 's', $libelle);
 
         // On execute la requete
         mysqli_stmt_execute($stmt);
@@ -32,7 +29,7 @@ if ((isset($_POST['label'])) && (!empty($_POST['label']))) {
 
 
     // On redige un message pour l'utilisateur
-    $_SESSION['message'] = 'Le type de livre "' . $label . '" a été enregistré';
+    $_SESSION['message'] = 'Le type de livre "' . $libelle . '" a été enregistré';
 
     // On ferme la connexion
     include_once 'close.php';
@@ -72,7 +69,7 @@ if ((isset($_POST['label'])) && (!empty($_POST['label']))) {
                 <form method="POST">
                     <div class="mb-3">
                         <label>Libéllé</label>
-                        <input type="text" id="label" name="label" class="form-control">
+                        <input type="text" id="libelle" name="libelle" class="form-control">
                     </div>
                     <button class="btn btn-primary">Enregistrer</button>
                     <a class="btn btn-info" href="index.php"> Retour à la liste</a>
