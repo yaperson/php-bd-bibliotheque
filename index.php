@@ -53,7 +53,7 @@
       }
       //--- Fin de table en HTML
       echo '</table>';
-      echo '    <button class="bt4">Ajouter un type </button>';
+      echo '    <a href="add.php"> <button class="bt4">Ajouter un type </button> </a>';
       //include_once('close.php');
       ?>
     </div>
